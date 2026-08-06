@@ -1,24 +1,12 @@
-import {useState} from 'react';
+import Navbar from "./Navbar";
 function App() {
-  const [ Firstname , setFirstname] = useState("");
-  const [ Lastname , setLastName] = useState("");
-
   return (
-      <div>
-        <h1> React input example</h1>
-        <input type ="text"
-        placeholder= "Enter your first name"
-        onChange={(event) => setFirstname(event.target.value)}
-        />
-        <input type ="text"
-        placeholder= "Enter your last name"
-        onChange={(event) => setLastName(event.target.value)}
-        />
-        <h2> Hello {Firstname} {Lastname}</h2>
-      </div>
-  
+    <div>
+      <Navbar />
+      <h1> Welcome to CodeTrack</h1>
+      <p> My developer progress tracker</p>
+
+    </div>
   );
-  
 }
 export default App;
-
