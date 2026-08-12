@@ -4,12 +4,16 @@ function ProgressCard(props) {
   const [completed, setCompleted] = useState(props.completed);
 
   function increaseProgress() {
-    setCompleted(completed + 1);
-  }
-  function decreaseProgress() {
-    setCompleted(completed - 1);
+    if (completed < props.total) {
+      setCompleted(completed + 1);
+    }
   }
 
+  function decreaseProgress() {
+    if (completed > 0) {
+      setCompleted(completed - 1);
+    }
+  }
 
   return (
     <div>
@@ -19,9 +23,19 @@ function ProgressCard(props) {
         {completed} / {props.total}
       </p>
 
+    {completed === 0 ? (
+  <p>🔴 Not Started</p>
+) : completed === props.total ? (
+  <p>🟢 Completed</p>
+) : (
+  <p>🟡 In Progress</p>
+)}
+      {completed===props.total&&(<p>Goal Achieved!</p>)}
+
       <button onClick={increaseProgress}>
         +1 Problem
       </button>
+
       <button onClick={decreaseProgress}>
         -1 Problem
       </button>
