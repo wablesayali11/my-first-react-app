@@ -24,13 +24,14 @@ function ProgressCard(props) {
       </p>
 
     {completed === 0 ? (
-  <p>🔴 Not Started</p>
-) : completed === props.total ? (
-  <p>🟢 Completed</p>
-) : (
-  <p>🟡 In Progress</p>
-)}
-      {completed===props.total&&(<p>Goal Achieved!</p>)}
+      <p>🔴 Not Started</p>
+    ) : completed === props.total ? (
+      <p>🟢 Completed</p>
+    ) : (
+      <p>🟡 In Progress</p>
+    )}
+      {completed===props.total && 
+       (<p>Goal Achieved!</p>)}
 
       <button onClick={increaseProgress}>
         +1 Problem
