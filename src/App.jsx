@@ -1,3 +1,4 @@
+import Quote from "./Quote.jsx";
 import { useState, useEffect } from "react";
 import GoalForm from "./GoalForm.jsx";
 import Navbar from "./Navbar.jsx";
@@ -68,8 +69,9 @@ function App() {
       <h1>Welcome to CodeTrack</h1>
 
       <p>My developer progress tracker</p>
-
+      <Quote />
       <h2>Today's Goals</h2>
+      
 
       {/* Goal Form */}
       <GoalForm onAddGoal={addGoal} />
