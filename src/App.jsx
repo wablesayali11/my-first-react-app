@@ -1,6 +1,7 @@
 import Quote from "./Quote.jsx";
 import { useState, useEffect } from "react";
 import GoalForm from "./GoalForm.jsx";
+import GoalItem from "./GoalItem.jsx";
 import Navbar from "./Navbar.jsx";
 import ProgressCard from "./ProgressCard.jsx";
 
@@ -47,9 +48,21 @@ function App() {
 
   // Add a new goal
   function addGoal(newGoal) {
-    setGoals([...goals, newGoal]);
+    const newGoalObject = {
+    text: newGoal,
+    completed: false
+   };
+   setGoals([...goals, newGoalObject]);
   }
-
+  function completeGoal(indexToComplete) {
+  setGoals(
+    goals.map((goal, index) =>
+      index === indexToComplete
+        ? { ...goal, completed: !goal.completed }
+        : goal
+    )
+  );
+}
   // Delete a goal
   function deleteGoal(indexToDelete) {
     setGoals(
@@ -79,17 +92,17 @@ function App() {
       {/* Display Goals */}
       <h3>Your Goals</h3>
 
-      <ul>
-        {goals.map((goal, index) => (
-          <li key={index}>
-            {goal}
-
-            <button onClick={() => deleteGoal(index)}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+     <ul>
+     {goals.map((goal, index) => (
+     <GoalItem
+      key={index}
+      goal={goal}
+      index={index}
+      onDelete={deleteGoal}
+      onComplete={completeGoal}
+     />
+     ))}
+     </ul>
 
       {/* Progress Cards */}
       {skills.map((skill) => (
