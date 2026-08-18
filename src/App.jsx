@@ -1,4 +1,5 @@
 import Quote from "./Quote.jsx";
+import GoalStats from "./GoalStats.jsx";
 import { useState, useEffect } from "react";
 import GoalForm from "./GoalForm.jsx";
 import GoalItem from "./GoalItem.jsx";
@@ -84,10 +85,9 @@ function App() {
       <p>My developer progress tracker</p>
       <Quote />
       <h2>Today's Goals</h2>
-      
-
-      {/* Goal Form */}
       <GoalForm onAddGoal={addGoal} />
+
+      <GoalStats goals={goals} />
 
       {/* Display Goals */}
       <h3>Your Goals</h3>
