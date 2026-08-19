@@ -1,45 +1,44 @@
-import { useState } from "react";
-
-function ProgressCard(props) {
-  const [completed, setCompleted] = useState(props.completed);
-
-  function increaseProgress() {
-    if (completed < props.total) {
-      setCompleted(completed + 1);
-    }
-  }
-
-  function decreaseProgress() {
-    if (completed > 0) {
-      setCompleted(completed - 1);
-    }
-  }
+function ProgressCard({ title, completed, total }) {
+  const percentage = Math.round((completed / total) * 100);
 
   return (
     <div>
-      <h2>{props.title}</h2>
+      <h2>{title}</h2>
 
       <p>
-        {completed} / {props.total}
+        {completed} / {total}
       </p>
 
-    {completed === 0 ? (
-      <p>🔴 Not Started</p>
-    ) : completed === props.total ? (
-      <p>🟢 Completed</p>
-    ) : (
-      <p>🟡 In Progress</p>
-    )}
-      {completed===props.total && 
-       (<p>Goal Achieved!</p>)}
+      <div
+        style={{
+          width: "300px",
+          height: "20px",
+          border: "1px solid black",
+          borderRadius: "10px",
+          overflow: "hidden"
+        }}
+      >
+        <div
+          style={{
+            width: `${percentage}%`,
+            height: "100%",
+            backgroundColor: "green"
+          }}
+        ></div>
+      </div>
 
-      <button onClick={increaseProgress}>
-        +1 Problem
-      </button>
+      <p>{percentage}% Complete</p>
 
-      <button onClick={decreaseProgress}>
-        -1 Problem
-      </button>
+      {completed === 0 ? (
+        <p>🔴 Not Started</p>
+      ) : completed === total ? (
+        <p>🟢 Completed</p>
+      ) : (
+        <p>🟡 In Progress</p>
+      )}
+
+      <button>+1 Problem</button>
+      <button>-1 Problem</button>
     </div>
   );
 }
