@@ -1,44 +1,53 @@
-function ProgressCard({ title, completed, total }) {
+
+function ProgressCard({ title, completed, total, onIncrease, onDecrease }) {
   const percentage = Math.round((completed / total) * 100);
 
   return (
-    <div>
+    <div className="progress-card">
+      {/* Skill Title */}
       <h2>{title}</h2>
 
+      {/* Completed Problems */}
       <p>
         {completed} / {total}
       </p>
 
-      <div
-        style={{
-          width: "300px",
-          height: "20px",
-          border: "1px solid black",
-          borderRadius: "10px",
-          overflow: "hidden"
-        }}
-      >
+      {/* Progress Bar */}
+      <div className="progress-bar">
         <div
-          style={{
-            width: `${percentage}%`,
-            height: "100%",
-            backgroundColor: "green"
-          }}
+          className="progress-fill"
+          style={{ width: `${percentage}%` }}
         ></div>
       </div>
 
+      {/* Progress Percentage */}
       <p>{percentage}% Complete</p>
 
+      {/* Progress Status */}
       {completed === 0 ? (
         <p>🔴 Not Started</p>
-      ) : completed === total ? (
+      ) : completed >= total ? (
         <p>🟢 Completed</p>
       ) : (
         <p>🟡 In Progress</p>
       )}
 
-      <button>+1 Problem</button>
-      <button>-1 Problem</button>
+      {/* Progress Buttons */}
+      <div className="progress-buttons">
+        <button
+          onClick={onIncrease}
+          disabled={completed >= total}
+        >
+          +1 Problem
+        </button>
+
+        <button
+          onClick={onDecrease}
+          disabled={completed <= 0}
+        >
+          -1 Problem
+        </button>
+      </div>
     </div>
   );
 }
