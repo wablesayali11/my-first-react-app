@@ -1,12 +1,22 @@
 
+import { useState, useEffect } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 import Quote from "./Quote.jsx";
 import GoalStats from "./GoalStats.jsx";
-import { useState, useEffect } from "react";
 import GoalForm from "./GoalForm.jsx";
 import GoalItem from "./GoalItem.jsx";
 import Navbar from "./Navbar.jsx";
 import ProgressCard from "./ProgressCard.jsx";
+
+import About from "./pages/About.jsx";
+import NotFound from "./pages/NotFound.jsx";
+
 import "./App.css";
 
 function App() {
@@ -47,7 +57,8 @@ function App() {
   function increaseProgress(skillTitle) {
     setSkills((prevSkills) =>
       prevSkills.map((skill) =>
-        skill.title === skillTitle && skill.completed < skill.total
+        skill.title === skillTitle &&
+        skill.completed < skill.total
           ? { ...skill, completed: skill.completed + 1 }
           : skill
       )
@@ -58,7 +69,8 @@ function App() {
   function decreaseProgress(skillTitle) {
     setSkills((prevSkills) =>
       prevSkills.map((skill) =>
-        skill.title === skillTitle && skill.completed > 0
+        skill.title === skillTitle &&
+        skill.completed > 0
           ? { ...skill, completed: skill.completed - 1 }
           : skill
       )
@@ -94,46 +106,81 @@ function App() {
   }
 
   return (
-    <div>
-      <Navbar />
+    <BrowserRouter>
+      <div>
+        <Navbar />
 
-      <h1>Welcome to CodeTrack</h1>
-      <p>My developer progress tracker</p>
+        {/* Page Navigation */}
+        <nav>
+          <Link to="/">Home</Link>
+          {" | "}
+          <Link to="/about">About</Link>
+        </nav>
 
-      <Quote />
+        <Routes>
+          {/* Home Page */}
+          <Route
+            path="/"
+            element={
+              <div>
+                <h1>Welcome to CodeTrack</h1>
+                <p>My developer progress tracker</p>
 
-      <h2>Today's Goals</h2>
-      <GoalForm onAddGoal={addGoal} />
+                <Quote />
 
-      <GoalStats goals={goals} />
+                <h2>Today's Goals</h2>
+                <GoalForm onAddGoal={addGoal} />
 
-      {/* Display Goals */}
-      <h3>Your Goals</h3>
+                <GoalStats goals={goals} />
 
-      <ul>
-        {goals.map((goal, index) => (
-          <GoalItem
-            key={index}
-            goal={goal}
-            index={index}
-            onDelete={deleteGoal}
-            onComplete={completeGoal}
+                {/* Display Goals */}
+                <h3>Your Goals</h3>
+
+                <ul>
+                  {goals.map((goal, index) => (
+                    <GoalItem
+                      key={index}
+                      goal={goal}
+                      index={index}
+                      onDelete={deleteGoal}
+                      onComplete={completeGoal}
+                    />
+                  ))}
+                </ul>
+
+                {/* Progress Cards */}
+                {skills.map((skill) => (
+                  <ProgressCard
+                    key={skill.title}
+                    title={skill.title}
+                    completed={skill.completed}
+                    total={skill.total}
+                    onIncrease={() =>
+                      increaseProgress(skill.title)
+                    }
+                    onDecrease={() =>
+                      decreaseProgress(skill.title)
+                    }
+                  />
+                ))}
+              </div>
+            }
           />
-        ))}
-      </ul>
 
-      {/* Progress Cards */}
-      {skills.map((skill) => (
-        <ProgressCard
-          key={skill.title}
-          title={skill.title}
-          completed={skill.completed}
-          total={skill.total}
-          onIncrease={() => increaseProgress(skill.title)}
-          onDecrease={() => decreaseProgress(skill.title)}
-        />
-      ))}
-    </div>
+          {/* About Page */}
+          <Route
+            path="/about"
+            element={<About />}
+          />
+
+          {/* 404 Page */}
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
