@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from "react";
 import {
   BrowserRouter,
@@ -7,7 +8,8 @@ import {
   Link
 } from "react-router-dom";
 
-import Quote from "./Quote.jsx";
+import Quote from "./quote.jsx";
+import Users from "./users.jsx";
 import GoalStats from "./GoalStats.jsx";
 import GoalForm from "./GoalForm.jsx";
 import GoalItem from "./GoalItem.jsx";
@@ -43,12 +45,12 @@ function App() {
     return savedGoals ? JSON.parse(savedGoals) : [];
   });
 
-  // Save skills whenever skills change
+  // Save skills whenever they change
   useEffect(() => {
     localStorage.setItem("skills", JSON.stringify(skills));
   }, [skills]);
 
-  // Save goals whenever goals change
+  // Save goals whenever they change
   useEffect(() => {
     localStorage.setItem("goals", JSON.stringify(goals));
   }, [goals]);
@@ -127,6 +129,9 @@ function App() {
                 <p>My developer progress tracker</p>
 
                 <Quote />
+
+                {/* Day 18: API User Search */}
+                <Users />
 
                 <h2>Today's Goals</h2>
                 <GoalForm onAddGoal={addGoal} />
